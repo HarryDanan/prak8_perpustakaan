@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.0.1
+-- version 4.8.3
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 27 Apr 2019 pada 17.37
--- Versi server: 10.1.32-MariaDB
--- Versi PHP: 7.2.5
+-- Generation Time: May 03, 2019 at 09:58 AM
+-- Server version: 10.1.35-MariaDB
+-- PHP Version: 7.2.9
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -25,7 +25,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `anggota`
+-- Table structure for table `anggota`
 --
 
 CREATE TABLE `anggota` (
@@ -37,7 +37,7 @@ CREATE TABLE `anggota` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `anggota`
+-- Dumping data for table `anggota`
 --
 
 INSERT INTO `anggota` (`kd_anggota`, `nama`, `prodi`, `jenjang`, `alamat`) VALUES
@@ -46,7 +46,7 @@ INSERT INTO `anggota` (`kd_anggota`, `nama`, `prodi`, `jenjang`, `alamat`) VALUE
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `buku`
+-- Table structure for table `buku`
 --
 
 CREATE TABLE `buku` (
@@ -58,7 +58,7 @@ CREATE TABLE `buku` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `buku`
+-- Dumping data for table `buku`
 --
 
 INSERT INTO `buku` (`kd_register`, `judul_buku`, `pengarang`, `penerbit`, `tahun_terbit`) VALUES
@@ -67,7 +67,7 @@ INSERT INTO `buku` (`kd_register`, `judul_buku`, `pengarang`, `penerbit`, `tahun
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `detil_pinjam`
+-- Table structure for table `detil_pinjam`
 --
 
 CREATE TABLE `detil_pinjam` (
@@ -80,7 +80,7 @@ CREATE TABLE `detil_pinjam` (
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `peminjaman`
+-- Table structure for table `peminjaman`
 --
 
 CREATE TABLE `peminjaman` (
@@ -92,47 +92,51 @@ CREATE TABLE `peminjaman` (
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `petugas`
+-- Table structure for table `petugas`
 --
 
 CREATE TABLE `petugas` (
   `kd_petugas` int(10) NOT NULL,
+  `username` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
   `nama` varchar(255) NOT NULL,
-  `alamat` varchar(255) NOT NULL
+  `alamat` varchar(255) NOT NULL,
+  `last_login` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `petugas`
+-- Dumping data for table `petugas`
 --
 
-INSERT INTO `petugas` (`kd_petugas`, `nama`, `alamat`) VALUES
-(1, 'a', 'a');
+INSERT INTO `petugas` (`kd_petugas`, `username`, `password`, `nama`, `alamat`, `last_login`) VALUES
+(0, 'qwerty', '1234', '', '', '2019-05-03 07:31:41'),
+(1, '', '', 'a', 'a', '2019-05-03 06:54:16');
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indeks untuk tabel `anggota`
+-- Indexes for table `anggota`
 --
 ALTER TABLE `anggota`
   ADD PRIMARY KEY (`kd_anggota`);
 
 --
--- Indeks untuk tabel `buku`
+-- Indexes for table `buku`
 --
 ALTER TABLE `buku`
   ADD PRIMARY KEY (`kd_register`);
 
 --
--- Indeks untuk tabel `detil_pinjam`
+-- Indexes for table `detil_pinjam`
 --
 ALTER TABLE `detil_pinjam`
   ADD KEY `kd_register` (`kd_register`),
   ADD KEY `kd_pinjam` (`kd_pinjam`);
 
 --
--- Indeks untuk tabel `peminjaman`
+-- Indexes for table `peminjaman`
 --
 ALTER TABLE `peminjaman`
   ADD PRIMARY KEY (`kd_pinjam`),
@@ -140,24 +144,24 @@ ALTER TABLE `peminjaman`
   ADD KEY `kd_petugas` (`kd_petugas`);
 
 --
--- Indeks untuk tabel `petugas`
+-- Indexes for table `petugas`
 --
 ALTER TABLE `petugas`
   ADD PRIMARY KEY (`kd_petugas`);
 
 --
--- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
+-- Constraints for dumped tables
 --
 
 --
--- Ketidakleluasaan untuk tabel `detil_pinjam`
+-- Constraints for table `detil_pinjam`
 --
 ALTER TABLE `detil_pinjam`
   ADD CONSTRAINT `detil_pinjam_ibfk_1` FOREIGN KEY (`kd_pinjam`) REFERENCES `peminjaman` (`kd_pinjam`),
   ADD CONSTRAINT `detil_pinjam_ibfk_2` FOREIGN KEY (`kd_register`) REFERENCES `buku` (`kd_register`);
 
 --
--- Ketidakleluasaan untuk tabel `peminjaman`
+-- Constraints for table `peminjaman`
 --
 ALTER TABLE `peminjaman`
   ADD CONSTRAINT `peminjaman_ibfk_1` FOREIGN KEY (`kd_anggota`) REFERENCES `anggota` (`kd_anggota`),

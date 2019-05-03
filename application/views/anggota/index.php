@@ -15,6 +15,9 @@
 			<li class="nav-item">
 				<a class="nav-link" href='<?php echo base_url("petugas"); ?>'>Petugas</a>
 			</li>
+			<li class="nav-item">
+				<h5>Admin : <?php echo $this->session->userdata("nama"); ?></h5>
+			</li>
 		</ul>
 	</div>
 		<h4>Data Anggota</h4>
